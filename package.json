@@ -1,0 +1,15 @@
+{
+  "name": "grip-task2",
+  "version": "1.0.0",
+  "description": "this is my task 2 for GRIP, The Sparks Foundation",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Nikhil Tripathi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.10.5"
+  }
+}
