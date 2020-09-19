@@ -1,0 +1,5 @@
+users view_prev_transaction
+  -> username  email  credits donate 
+    -> sentTo(dropdown) amount
+      -> error -> insuffient credits requires x more credits to transfer
+      -> accept -> succefully transfered to M your current credit score is y.

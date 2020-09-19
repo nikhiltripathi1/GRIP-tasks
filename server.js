@@ -20,9 +20,10 @@ mongoose
 
 //Routes
 app.use("/users", require("./routes/api/users"));
-app.use("/transfer", require("./routes/api/transactions"));
+app.use("/transfer", require("./routes/api/transfers"));
+app.use("/transaction", require("./routes/api/transactions"));
 
 //port
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`Server Running at post ${port}`));
+app.listen(port, () => console.log(`Server Running at port ${port}`));

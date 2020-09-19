@@ -4,12 +4,14 @@
   "description": "this is my task 2 for GRIP, The Sparks Foundation",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "server": "nodemon server.js"
   },
   "author": "Nikhil Tripathi",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.10.5"
+    "mongoose": "^5.10.5",
+    "nodemon": "^2.0.4"
   }
 }
