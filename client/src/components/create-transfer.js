@@ -30,25 +30,38 @@ export default class Transfer extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    const transaction = {
-      sentBy: "Nikhil Tripathi",
-      sentTo: this.state.username,
-      credits: this.state.amount,
-    };
-    console.log(transaction);
     const id = this.state.users.filter((user) => {
       return user.username === this.state.username;
     });
     console.log(id[0]._id);
+    const senderID = window.location.href.split("/");
+    const sID = senderID[senderID.length - 1];
+    console.log(sID);
+    const sender = this.state.users.filter((user) => {
+      return user._id === sID;
+    });
+    const transaction = {
+      sentBy: sender[0].username,
+      sentTo: this.state.username,
+      credits: this.state.amount,
+    };
     axios
-      .post(window.location.href + "/" + id[0]._id, transaction)
+      .post(
+        "http://localhost:5000/transfer/" + sID + "/" + id[0]._id,
+        transaction
+      )
       .then((res) => console.log(res.data))
       .catch((err) => console.log("error"));
 
     axios
-      .put(window.location.href + "/" + id[0]._id, transaction)
+      .put(
+        "http://localhost:5000/transfer/" + sID + "/" + id[0]._id,
+        transaction
+      )
       .then((res) => console.log(res.data))
       .catch((err) => console.log("error"));
+
+    setTimeout(() => (window.location = "/transactions"), 2000);
   };
 
   render() {
