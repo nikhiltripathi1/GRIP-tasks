@@ -4,6 +4,7 @@ import axios from "axios";
 export default class Transfer extends Component {
   state = {
     username: "Sent To",
+    error: false,
     amount: "",
     users: [],
   };
@@ -40,39 +41,45 @@ export default class Transfer extends Component {
     const sender = this.state.users.filter((user) => {
       return user._id === sID;
     });
-    const transaction = {
-      sentBy: sender[0].username,
-      sentTo: this.state.username,
-      credits: this.state.amount,
-    };
-    axios
-      .post(
-        "http://localhost:5000/transfer/" + sID + "/" + id[0]._id,
-        transaction
-      )
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log("error"));
+    if (sender[0].credits >= this.state.amount) {
+      const transaction = {
+        sentBy: sender[0].username,
+        sentTo: this.state.username,
+        credits: this.state.amount,
+      };
+      axios
+        .post(
+          "http://localhost:5000/transfer/" + sID + "/" + id[0]._id,
+          transaction
+        )
+        .then((res) => console.log(res.data))
+        .catch((err) => console.log("error"));
 
-    axios
-      .put(
-        "http://localhost:5000/transfer/" + sID + "/" + id[0]._id,
-        transaction
-      )
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log("error"));
+      axios
+        .put(
+          "http://localhost:5000/transfer/" + sID + "/" + id[0]._id,
+          transaction
+        )
+        .then((res) => console.log(res.data))
+        .catch((err) => console.log("error"));
 
-    setTimeout(() => (window.location = "/transactions"), 2000);
+      setTimeout(() => (window.location = "/transactions"), 2000);
+    } else {
+      this.setState({ error: true });
+    }
   };
 
   render() {
     return (
       <div>
         <h3>Create New Transaction</h3>
+        <p style={{ background: "red" }}>
+          {this.state.error ? "Not Enough Credits" : null}
+        </p>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label>Send To: </label>
             <select
-              ref="userInput"
               required
               className="form-control"
               value={this.state.username}
@@ -92,6 +99,7 @@ export default class Transfer extends Component {
             <input
               type="number"
               required
+              min={1}
               className="form-control"
               value={this.state.amount}
               onChange={this.onChangeAmount}
