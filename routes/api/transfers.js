@@ -23,11 +23,11 @@ router.put("/:ids/:idr", (req, res) => {
       { $inc: { credits: -req.body.credits } }
     )
     .then(() => res.json({ success: true }))
-    .catch((err) => res.status(404).json({ success: false }));
+    .catch((err) => res.status(404).json({ error: err }));
   user
     .updateOne({ _id: req.params.idr }, { $inc: { credits: req.body.credits } })
     .then(() => res.json({ success: true }))
-    .catch((err) => res.status(404).json({ success: false }));
+    .catch((err) => res.status(404).json({ error: err }));
 });
 
 module.exports = router;

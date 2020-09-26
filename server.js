@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
 //middleware
+app.use(cors());
 app.use(express.json());
 
 //DB Config
@@ -21,7 +23,7 @@ mongoose
 //Routes
 app.use("/users", require("./routes/api/users"));
 app.use("/transfer", require("./routes/api/transfers"));
-app.use("/transaction", require("./routes/api/transactions"));
+app.use("/transactions", require("./routes/api/transactions"));
 
 //port
 const port = process.env.PORT || 5000;

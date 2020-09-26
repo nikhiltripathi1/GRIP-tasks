@@ -1,0 +1,98 @@
+import React, { Component } from "react";
+import axios from "axios";
+
+export default class Transfer extends Component {
+  state = {
+    username: "Sent To",
+    amount: "",
+    users: [],
+  };
+
+  componentDidMount() {
+    axios
+      .get("http://localhost:5000/users")
+      .then((response) => {
+        // console.log(response);
+        this.setState({ users: response.data });
+      })
+      .catch((error) => console.log("The error is", error));
+  }
+  onChangeUsername = (e) => {
+    this.setState({
+      username: e.target.value,
+    });
+  };
+  onChangeAmount = (e) => {
+    this.setState({
+      amount: e.target.value,
+    });
+  };
+  onSubmit = (e) => {
+    e.preventDefault();
+
+    const transaction = {
+      sentBy: "Nikhil Tripathi",
+      sentTo: this.state.username,
+      credits: this.state.amount,
+    };
+    console.log(transaction);
+    const id = this.state.users.filter((user) => {
+      return user.username === this.state.username;
+    });
+    console.log(id[0]._id);
+    axios
+      .post(window.location.href + "/" + id[0]._id, transaction)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log("error"));
+
+    axios
+      .put(window.location.href + "/" + id[0]._id, transaction)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log("error"));
+  };
+
+  render() {
+    return (
+      <div>
+        <h3>Create New Transaction</h3>
+        <form onSubmit={this.onSubmit}>
+          <div className="form-group">
+            <label>Send To: </label>
+            <select
+              ref="userInput"
+              required
+              className="form-control"
+              value={this.state.username}
+              onChange={this.onChangeUsername}
+            >
+              {this.state.users.map(function (user) {
+                return (
+                  <option key={user._id} value={user.username}>
+                    {user.username}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Amount: </label>
+            <input
+              type="number"
+              required
+              className="form-control"
+              value={this.state.amount}
+              onChange={this.onChangeAmount}
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="submit"
+              value="Transfer money"
+              className="btn btn-primary"
+            />
+          </div>
+        </form>
+      </div>
+    );
+  }
+}
