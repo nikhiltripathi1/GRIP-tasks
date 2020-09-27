@@ -109,15 +109,13 @@ export default class Transfer extends Component {
                 />
               </div>
               <div className="form-group">
-                <Link to="/transactions">
-                  <button
-                    type="submit"
-                    value="Transfer money"
-                    className="btn btn-primary"
-                  >
-                    Transfer Credits
-                  </button>
-                </Link>
+                <button
+                  type="submit"
+                  value="Transfer money"
+                  className="btn btn-primary"
+                >
+                  Transfer Credits
+                </button>
               </div>
             </form>
           </div>
