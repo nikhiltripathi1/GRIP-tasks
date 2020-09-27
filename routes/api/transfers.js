@@ -18,7 +18,7 @@ router.post("/:ids/:idr", (req, res) => {
 });
 router.put("/:ids/:idr", (req, res) => {
   user
-    .updateOne(
+    .update(
       { _id: req.params.ids },
       { $inc: { credits: -req.body.credits } }
     )

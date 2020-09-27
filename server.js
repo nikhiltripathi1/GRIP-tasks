@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
+const path = require("path");
 const cors = require("cors");
 
 const app = express();
@@ -9,8 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 //DB Config
-const db =
-  "mongodb+srv://nik645:8851514606@cluster0-fc2be.mongodb.net/users?retryWrites=true&w=majority";
+const db = require("./config/keys").mongoURI;
 
 //connecting MongoDB
 mongoose
@@ -24,6 +24,14 @@ mongoose
 app.use("/users", require("./routes/api/users"));
 app.use("/transfer", require("./routes/api/transfers"));
 app.use("/transactions", require("./routes/api/transactions"));
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 //port
 const port = process.env.PORT || 5000;

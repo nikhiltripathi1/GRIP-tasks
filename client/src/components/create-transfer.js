@@ -85,6 +85,9 @@ export default class Transfer extends Component {
               value={this.state.username}
               onChange={this.onChangeUsername}
             >
+              <option value={this.state.username} disabled>
+                Send To
+              </option>
               {this.state.users.map(function (user) {
                 return (
                   <option key={user._id} value={user.username}>
