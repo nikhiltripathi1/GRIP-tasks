@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+import Navbar from "./navbar";
 const User = (props) => (
   <tr>
     <td>{props.user.username}</td>
@@ -34,20 +35,23 @@ export default class UsersList extends Component {
 
   render() {
     return (
-      <div>
-        <h3>All Users</h3>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Credits</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>{this.userList()}</tbody>
-        </table>
-      </div>
+      <>
+        <Navbar />
+        <div>
+          <h3>All Users</h3>
+          <table className="table">
+            <thead className="thead-light">
+              <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Credits</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>{this.userList()}</tbody>
+          </table>
+        </div>
+      </>
     );
   }
 }

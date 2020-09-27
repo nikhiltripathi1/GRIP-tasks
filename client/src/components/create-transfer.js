@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+import Navbar from "./navbar";
+
 export default class Transfer extends Component {
   state = {
     username: "Sent To",
@@ -65,52 +67,55 @@ export default class Transfer extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Create New Transaction</h3>
-        <p style={{ background: "red" }}>
-          {this.state.error ? "Not Enough Credits" : null}
-        </p>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <label>Send To: </label>
-            <select
-              required
-              className="form-control"
-              value={this.state.username}
-              onChange={this.onChangeUsername}
-            >
-              <option value={this.state.username} disabled>
-                Send To
-              </option>
-              {this.state.users.map(function (user) {
-                return (
-                  <option key={user._id} value={user.username}>
-                    {user.username}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Amount: </label>
-            <input
-              type="number"
-              required
-              min={1}
-              className="form-control"
-              value={this.state.amount}
-              onChange={this.onChangeAmount}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="submit"
-              value="Transfer money"
-              className="btn btn-primary"
-            />
-          </div>
-        </form>
-      </div>
+      <>
+        <Navbar />
+        <div>
+          <h3>Create New Transaction</h3>
+          <p style={{ background: "red" }}>
+            {this.state.error ? "Not Enough Credits" : null}
+          </p>
+          <form onSubmit={this.onSubmit}>
+            <div className="form-group">
+              <label>Send To: </label>
+              <select
+                required
+                className="form-control"
+                value={this.state.username}
+                onChange={this.onChangeUsername}
+              >
+                <option value={this.state.username} disabled>
+                  Send To
+                </option>
+                {this.state.users.map(function (user) {
+                  return (
+                    <option key={user._id} value={user.username}>
+                      {user.username}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Amount: </label>
+              <input
+                type="number"
+                required
+                min={1}
+                className="form-control"
+                value={this.state.amount}
+                onChange={this.onChangeAmount}
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="submit"
+                value="Transfer money"
+                className="btn btn-primary"
+              />
+            </div>
+          </form>
+        </div>
+      </>
     );
   }
 }

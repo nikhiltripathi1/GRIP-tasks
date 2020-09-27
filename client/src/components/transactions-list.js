@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+import Navbar from "./navbar";
+
 const Transaction = (props) => (
   <tr>
     <td>{props.transaction.sentBy}</td>
@@ -39,21 +41,24 @@ export default class TransactionsList extends Component {
 
   render() {
     return (
-      <div>
-        <h3>All Transactions Logs</h3>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>Sent By</th>
-              <th>Sent To</th>
-              <th>Credit Amount</th>
-              <th>Date</th>
-              <th>Time</th>
-            </tr>
-          </thead>
-          <tbody>{this.transactionList()}</tbody>
-        </table>
-      </div>
+      <>
+        <Navbar />
+        <div>
+          <h3>All Transactions Logs</h3>
+          <table className="table">
+            <thead className="thead-light">
+              <tr>
+                <th>Sent By</th>
+                <th>Sent To</th>
+                <th>Credit Amount</th>
+                <th>Date</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody>{this.transactionList()}</tbody>
+          </table>
+        </div>
+      </>
     );
   }
 }
