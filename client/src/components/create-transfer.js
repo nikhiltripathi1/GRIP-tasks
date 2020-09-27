@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import axios from "axios";
-
+import { Redirect } from "react-router-dom";
 import Navbar from "./navbar";
 
 export default class Transfer extends Component {
   state = {
     username: "Sent To",
     error: false,
+    redirect: false,
     amount: "",
     users: [],
   };
@@ -59,63 +60,71 @@ export default class Transfer extends Component {
         .then((res) => console.log(res.data))
         .catch((err) => console.log("error"));
 
-      setTimeout(() => (window.location = "/transactions"), 2000);
+      this.setState({ redirect: true });
     } else {
       this.setState({ error: true });
     }
   };
 
   render() {
-    return (
-      <>
-        <Navbar />
-        <div>
-          <h3>Create New Transaction</h3>
-          <p style={{ background: "red" }}>
-            {this.state.error ? "Not Enough Credits" : null}
-          </p>
-          <form onSubmit={this.onSubmit}>
-            <div className="form-group">
-              <label>Send To: </label>
-              <select
-                required
-                className="form-control"
-                value={this.state.username}
-                onChange={this.onChangeUsername}
-              >
-                <option value={this.state.username} disabled>
-                  Send To
-                </option>
-                {this.state.users.map(function (user) {
-                  return (
-                    <option key={user._id} value={user.username}>
-                      {user.username}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className="form-group">
-              <label>Amount: </label>
-              <input
-                type="number"
-                required
-                min={1}
-                className="form-control"
-                value={this.state.amount}
-                onChange={this.onChangeAmount}
-              />
-            </div>
-            <div className="form-group">
-              <input
-                type="submit"
-                value="Transfer money"
-                className="btn btn-primary"
-              />
-            </div>
-          </form>
-        </div>
-      </>
-    );
+    if (!this.state.redirect) {
+      return (
+        <>
+          <Navbar />
+          <div>
+            <h3>Create New Transaction</h3>
+            <p style={{ background: "red" }}>
+              {this.state.error ? "Not Enough Credits" : null}
+            </p>
+            <form onSubmit={this.onSubmit}>
+              <div className="form-group">
+                <label>Send To: </label>
+                <select
+                  required
+                  className="form-control"
+                  value={this.state.username}
+                  onChange={this.onChangeUsername}
+                >
+                  <option value={this.state.username} disabled>
+                    Send To
+                  </option>
+                  {this.state.users.map(function (user) {
+                    return (
+                      <option key={user._id} value={user.username}>
+                        {user.username}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Amount: </label>
+                <input
+                  type="number"
+                  required
+                  min={1}
+                  className="form-control"
+                  value={this.state.amount}
+                  onChange={this.onChangeAmount}
+                />
+              </div>
+              <div className="form-group">
+                <Link to="/transactions">
+                  <button
+                    type="submit"
+                    value="Transfer money"
+                    className="btn btn-primary"
+                  >
+                    Transfer Credits
+                  </button>
+                </Link>
+              </div>
+            </form>
+          </div>
+        </>
+      );
+    } else {
+      return <Redirect to="/transactions" />;
+    }
   }
 }
