@@ -14,13 +14,11 @@ const User = (props) => (
 );
 
 export default class UsersList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { users: [] };
-  }
+  state = { users: [] };
+
   componentDidMount() {
     axios
-      .get("http://localhost:5000/users")
+      .get("/users")
       .then((response) => {
         // console.log(response);
         this.setState({ users: response.data });
