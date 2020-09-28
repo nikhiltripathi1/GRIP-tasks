@@ -45,10 +45,10 @@ export default class TransactionsList extends Component {
         <div className="container">
           <h3 style={{ margin: "1rem auto" }}>All Transactions Logs</h3>
           <table className="table">
-            <thead className="thead-light">
+            <thead style={{ background: "#E71D36", color: "white" }}>
               <tr>
-                <th>Sent By</th>
-                <th>Sent To</th>
+                <th>Sender</th>
+                <th>Receiver </th>
                 <th>Credits</th>
                 <th>Date</th>
               </tr>

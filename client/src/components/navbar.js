@@ -10,7 +10,10 @@ export default class Navbar extends Component {
   };
   render() {
     return (
-      <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
+      <nav
+        className="navbar navbar-dark navbar-expand-lg"
+        style={{ background: "#011627" }}
+      >
         <div className="container">
           <Link to="/" className="navbar-brand">
             Credit Transfer App

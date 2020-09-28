@@ -58,7 +58,6 @@ export default class Transfer extends Component {
     const id = this.state.users.filter((user) => {
       return user.username === this.state.username;
     });
-    console.log(id[0]._id);
     const sender = this.findSender();
     if (sender[0].credits >= this.state.amount) {
       const transaction = {
@@ -68,19 +67,22 @@ export default class Transfer extends Component {
       };
       axios
         .post("/transfer/" + sender[0]._id + "/" + id[0]._id, transaction)
-        .then((res) => console.log(res.data))
-        .catch((err) => console.log("error"));
+        .then((res) => console.log("Transaction Saved"))
+        .catch((err) => console.log("error" + err));
 
       axios
         .put("/transfer/" + sender[0]._id + "/" + id[0]._id, transaction)
-        .then((res) => console.log(res.data))
-        .catch((err) => console.log("error"));
+        .then((res) => console.log("Transfered Successfully"))
+        .catch((err) => console.log("error" + err));
       setTimeout(() => {
-        alert("Transfer successful");
+        alert(" Credits Transfered successfully");
       });
       this.setState({ redirect: true });
     } else {
       this.setState({ error: true });
+      setTimeout(() => {
+        this.setState({ error: false });
+      }, 3000);
     }
   };
 

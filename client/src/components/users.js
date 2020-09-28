@@ -38,7 +38,7 @@ class Users extends Component {
                 <Card
                   body
                   inverse
-                  style={{ background: "gray" }}
+                  style={{ background: "#2EC4B6" }}
                   key={user._id}
                 >
                   <CardTitle>
@@ -54,7 +54,7 @@ class Users extends Component {
                     {user.credits}
                   </CardText>
                   <Link to={"/transfer/" + user._id}>
-                    <Button style={{ width: "100%", background: "#333" }}>
+                    <Button style={{ width: "100%", background: "#0D424B" }}>
                       Transfer
                     </Button>
                   </Link>

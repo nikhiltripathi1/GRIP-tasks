@@ -6,7 +6,7 @@ class Home extends React.Component {
     return (
       <>
         <Navbar />
-        <div style={{ background: "lightgrey", height: "100vh" }}>
+        <div style={{ background: "#F1FCF8", height: "92vh" }}>
           <div
             className="container"
             style={{ textAlign: "center", paddingTop: "3rem" }}
@@ -19,10 +19,12 @@ class Home extends React.Component {
             <Link to="/users">
               <button
                 style={{
-                  background: "green",
+                  background: "#E71D36",
                   width: "40%",
                   padding: "1rem",
+                  marginTop: "1rem",
                   color: "white",
+                  border: "none",
                   borderRadius: "0.5rem",
                 }}
               >

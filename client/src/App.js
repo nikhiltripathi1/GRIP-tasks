@@ -1,12 +1,11 @@
 import React from "react";
 import { Route } from "react-router-dom";
-// import './App.css';
+//import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Navbar from "./components/navbar";
 import Users from "./components/users";
-import TransactionsList from "./components/transactions-list";
-import Transfer from "./components/create-transfer";
+import TransactionsList from "./components/transactions";
+import Transfer from "./components/transfers";
 import Home from "./components/homepage";
 
 function App() {
