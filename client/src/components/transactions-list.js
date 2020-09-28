@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import axios from "axios";
 
 import Navbar from "./navbar";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Transaction = (props) => (
   <tr>
     <td>{props.transaction.sentBy}</td>
     <td>{props.transaction.sentTo}</td>
     <td>{props.transaction.credits}</td>
-    <td>{props.transaction.date.slice(0, 10)}</td>
-    <td>{props.transaction.date.slice(11, 19)}</td>
+    <td>{props.transaction.date.slice(2, 10)}</td>
   </tr>
 );
 
@@ -22,7 +22,6 @@ export default class TransactionsList extends Component {
     axios
       .get("/transactions")
       .then((response) => {
-        console.log(response);
         this.setState({ transactions: response.data });
       })
       .catch((error) => console.log("The error is", error));
@@ -43,16 +42,15 @@ export default class TransactionsList extends Component {
     return (
       <>
         <Navbar />
-        <div>
-          <h3>All Transactions Logs</h3>
+        <div className="container">
+          <h3 style={{ margin: "1rem auto" }}>All Transactions Logs</h3>
           <table className="table">
             <thead className="thead-light">
               <tr>
                 <th>Sent By</th>
                 <th>Sent To</th>
-                <th>Credit Amount</th>
+                <th>Credits</th>
                 <th>Date</th>
-                <th>Time</th>
               </tr>
             </thead>
             <tbody>{this.transactionList()}</tbody>

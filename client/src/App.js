@@ -4,15 +4,16 @@ import { Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Navbar from "./components/navbar";
-import UsersList from "./components/users-list";
+import Users from "./components/users";
 import TransactionsList from "./components/transactions-list";
 import Transfer from "./components/create-transfer";
+import Home from "./components/homepage";
 
 function App() {
   return (
-    <div className="container">
-      <Route exact path="/" component={Navbar} />
-      <Route path="/users" component={UsersList} />
+    <div>
+      <Route exact path="/" component={Home} />
+      <Route path="/users" component={Users} />
       <Route path="/transactions" component={TransactionsList} />
       <Route path="/transfer" component={Transfer} />
     </div>

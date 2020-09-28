@@ -5,7 +5,10 @@ const router = express.Router();
 const transfers = require("../../models/transfers");
 
 router.get("/", (req, res) => {
-  transfers.find().then((transfer) => res.json(transfer));
+  transfers
+    .find()
+    .sort({ date: -1 })
+    .then((transfer) => res.json(transfer));
 });
 
 module.exports = router;

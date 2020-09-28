@@ -1,11 +1,26 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButtonDropdown,
+  Input,
+  Button,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Alert,
+} from "reactstrap";
 import Navbar from "./navbar";
 
 export default class Transfer extends Component {
   state = {
     username: "Sent To",
+
+    dropdownOpen: false,
     error: false,
     redirect: false,
     amount: "",
@@ -21,15 +36,21 @@ export default class Transfer extends Component {
       })
       .catch((error) => console.log("The error is", error));
   }
-  onChangeUsername = (e) => {
+  onChange = (e) => {
     this.setState({
-      username: e.target.value,
+      [e.target.id]: e.target.value,
     });
   };
-  onChangeAmount = (e) => {
-    this.setState({
-      amount: e.target.value,
+  toggleDropDown = () => {
+    this.setState({ dropdownOpen: !this.state.dropdownOpen });
+  };
+  findSender = () => {
+    const senderID = window.location.href.split("/");
+    const sID = senderID[senderID.length - 1];
+    const sender = this.state.users.filter((user) => {
+      return user._id === sID;
     });
+    return sender;
   };
   onSubmit = (e) => {
     e.preventDefault();
@@ -38,12 +59,7 @@ export default class Transfer extends Component {
       return user.username === this.state.username;
     });
     console.log(id[0]._id);
-    const senderID = window.location.href.split("/");
-    const sID = senderID[senderID.length - 1];
-    console.log(sID);
-    const sender = this.state.users.filter((user) => {
-      return user._id === sID;
-    });
+    const sender = this.findSender();
     if (sender[0].credits >= this.state.amount) {
       const transaction = {
         sentBy: sender[0].username,
@@ -51,15 +67,17 @@ export default class Transfer extends Component {
         credits: this.state.amount,
       };
       axios
-        .post("/transfer/" + sID + "/" + id[0]._id, transaction)
+        .post("/transfer/" + sender[0]._id + "/" + id[0]._id, transaction)
         .then((res) => console.log(res.data))
         .catch((err) => console.log("error"));
 
       axios
-        .put("/transfer/" + sID + "/" + id[0]._id, transaction)
+        .put("/transfer/" + sender[0]._id + "/" + id[0]._id, transaction)
         .then((res) => console.log(res.data))
         .catch((err) => console.log("error"));
-
+      setTimeout(() => {
+        alert("Transfer successful");
+      });
       this.setState({ redirect: true });
     } else {
       this.setState({ error: true });
@@ -68,58 +86,58 @@ export default class Transfer extends Component {
 
   render() {
     if (!this.state.redirect) {
+      this.findSender();
       return (
-        <>
+        <div>
           <Navbar />
-          <div>
-            <h3>Create New Transaction</h3>
-            <p style={{ background: "red" }}>
-              {this.state.error ? "Not Enough Credits" : null}
-            </p>
+          <div className="container">
+            <h4 style={{ margin: "1rem auto" }}>Transfer Credits</h4>
+            {this.state.error ? (
+              <Alert color="danger">Not Enough Credits</Alert>
+            ) : null}
             <form onSubmit={this.onSubmit}>
-              <div className="form-group">
-                <label>Send To: </label>
-                <select
-                  required
-                  className="form-control"
-                  value={this.state.username}
-                  onChange={this.onChangeUsername}
+              <InputGroup>
+                <Input value={this.state.username} readOnly />
+                <InputGroupButtonDropdown
+                  addonType="append"
+                  isOpen={this.state.dropdownOpen}
+                  toggle={this.toggleDropDown}
                 >
-                  <option value={this.state.username} disabled>
-                    Send To
-                  </option>
-                  {this.state.users.map(function (user) {
-                    return (
-                      <option key={user._id} value={user.username}>
-                        {user.username}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-              <div className="form-group">
-                <label>Amount: </label>
-                <input
+                  <DropdownToggle caret>Sent To</DropdownToggle>
+                  <DropdownMenu>
+                    {" "}
+                    {this.state.users.map((user) => {
+                      return (
+                        <DropdownItem
+                          key={user._id}
+                          id="username"
+                          onClick={this.onChange}
+                          value={user.username}
+                        >
+                          {user.username}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </InputGroupButtonDropdown>
+              </InputGroup>
+              <br />
+              <InputGroup>
+                <InputGroupAddon addonType="prepend">Credits</InputGroupAddon>
+                <Input
                   type="number"
-                  required
                   min={1}
-                  className="form-control"
-                  value={this.state.amount}
-                  onChange={this.onChangeAmount}
+                  onChange={this.onChange}
+                  id="amount"
                 />
-              </div>
-              <div className="form-group">
-                <button
-                  type="submit"
-                  value="Transfer money"
-                  className="btn btn-primary"
-                >
-                  Transfer Credits
-                </button>
-              </div>
+              </InputGroup>
+              <br />
+              <Button type="submit" style={{ width: "100%" }}>
+                Transfer
+              </Button>
             </form>
           </div>
-        </>
+        </div>
       );
     } else {
       return <Redirect to="/transactions" />;
