@@ -142,7 +142,7 @@ export default class Transfer extends Component {
         </div>
       );
     } else {
-      return <Redirect to="/transactions" />;
+      return <Redirect to="/transactions-list" />;
     }
   }
 }

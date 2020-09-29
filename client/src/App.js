@@ -12,8 +12,8 @@ function App() {
   return (
     <div>
       <Route exact path="/" component={Home} />
-      <Route path="/users" component={Users} />
-      <Route path="/transactions" component={TransactionsList} />
+      <Route path="/users-list" component={Users} />
+      <Route path="/transactions-list" component={TransactionsList} />
       <Route path="/transfer" component={Transfer} />
     </div>
   );

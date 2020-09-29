@@ -16,7 +16,7 @@ class Home extends React.Component {
             <hr />
             <h4>Credit Transfer App</h4>
             <h6>By Nikhil Tripathi</h6>
-            <Link to="/users">
+            <Link to="/users-list">
               <button
                 style={{
                   background: "#E71D36",
