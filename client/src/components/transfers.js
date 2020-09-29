@@ -22,6 +22,7 @@ export default class Transfer extends Component {
 
     dropdownOpen: false,
     error: false,
+    errmsg: "",
     redirect: false,
     amount: "",
     users: [],
@@ -59,7 +60,15 @@ export default class Transfer extends Component {
       return user.username === this.state.username;
     });
     const sender = this.findSender();
-    if (sender[0].credits >= this.state.amount) {
+    if (sender[0].username === this.state.username) {
+      this.setState({
+        error: true,
+        errmsg: "Sender and Receiver are same, Choose another Receiver",
+      });
+      setTimeout(() => {
+        this.setState({ error: false });
+      }, 3000);
+    } else if (sender[0].credits >= this.state.amount) {
       const transaction = {
         sentBy: sender[0].username,
         sentTo: this.state.username,
@@ -79,7 +88,7 @@ export default class Transfer extends Component {
       });
       this.setState({ redirect: true });
     } else {
-      this.setState({ error: true });
+      this.setState({ error: true, errmsg: "Not Enough Credits" });
       setTimeout(() => {
         this.setState({ error: false });
       }, 3000);
@@ -95,7 +104,7 @@ export default class Transfer extends Component {
           <div className="container">
             <h4 style={{ margin: "1rem auto" }}>Transfer Credits</h4>
             {this.state.error ? (
-              <Alert color="danger">Not Enough Credits</Alert>
+              <Alert color="danger">{this.state.errmsg}</Alert>
             ) : null}
             <form onSubmit={this.onSubmit}>
               <InputGroup>

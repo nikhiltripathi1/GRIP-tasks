@@ -14,10 +14,7 @@ const Transaction = (props) => (
 );
 
 export default class TransactionsList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { transactions: [] };
-  }
+  state = { transactions: [] };
   componentDidMount() {
     axios
       .get("/transactions")
