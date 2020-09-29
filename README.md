@@ -22,4 +22,4 @@ multiple users.<br>
 ◇ Host the website at 000webhost, github.io, heroku app or any
 other free hosting provider. Check in code in gitlab.<br>
 
-Link To Live Website -> <a href='https://credit-transfer-app-nikhil.herokuapp.com'>Credit Management App</a>
+Link To Live Website -> <a href='https://credit-transfer-app-nikhil.herokuapp.com'>Credit Management</a>
